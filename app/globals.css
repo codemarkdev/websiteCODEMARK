@@ -1,0 +1,330 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Colores base mejorados para el tema claro */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    /* Colores de tarjeta con mejor contraste */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    /* Colores de popover con mejor contraste */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Color primario más vibrante para mejor visibilidad */
+    --primary: 196 100% 47%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Colores secundarios ajustados */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    /* Colores silenciados con mejor contraste */
+    --muted: 210 40% 93%;
+    --muted-foreground: 215.4 16.3% 36.9%;
+
+    /* Colores de acento ajustados */
+    --accent: 210 40% 90%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    /* Colores destructivos */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Bordes más visibles */
+    --border: 214.3 31.8% 85.4%;
+    --input: 214.3 31.8% 85.4%;
+    --ring: 196 100% 47%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Fondo más oscuro para mejor contraste */
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+
+    /* Tarjetas más oscuras para mejor contraste */
+    --card: 222 47% 10%;
+    --card-foreground: 210 40% 98%;
+
+    /* Popover más oscuro para mejor contraste */
+    --popover: 222 47% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Color primario más brillante para mejor visibilidad */
+    --primary: 186 100% 69%;
+    --primary-foreground: 222 47% 11%;
+
+    /* Colores secundarios ajustados */
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Colores silenciados con mejor contraste */
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 75%;
+
+    /* Colores de acento ajustados */
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    /* Colores destructivos */
+    --destructive: 0 62.8% 40.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Bordes más visibles */
+    --border: 217.2 32.6% 20%;
+    --input: 217.2 32.6% 20%;
+    --ring: 186 100% 69%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden; /* Asegura que no haya scroll horizontal en el body */
+  }
+  html {
+    overflow-x: hidden; /* Asegura que no haya scroll horizontal en el html */
+    scroll-behavior: smooth; /* ¡Añade esta línea para el desplazamiento suave! */
+  }
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Componentes reutilizables con @apply */
+@layer components {
+  /* Secciones con más espaciado */
+  .section-container {
+    @apply relative min-h-screen flex items-center justify-center overflow-hidden py-32; /* Aumentado de py-section-y */
+  }
+
+  .section-container-sm {
+    @apply relative py-24 overflow-hidden; /* Aumentado de py-16 */
+  }
+
+  .section-content {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full relative z-10; /* Ajustado px para móviles */
+  }
+
+  /* Títulos con más espaciado */
+  .title-gradient {
+    @apply bg-gradient-to-r from-tech-accent to-tech-accent2 bg-clip-text text-transparent font-bold;
+  }
+
+  .section-title {
+    @apply text-title-lg font-bold text-center mb-8;
+  }
+
+  .section-subtitle {
+    @apply text-body-lg text-muted-foreground text-center max-w-3xl mx-auto mb-16; /* Aumentado de mb-12 */
+  }
+
+  /* Tarjetas con más espaciado */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Botones */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground rounded-full px-8 py-4 font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-1; /* Aumentado padding */
+  }
+
+  .btn-outline {
+    @apply border border-primary text-primary rounded-full px-8 py-4 font-medium transition-all duration-300 hover:bg-primary/10 hover:-translate-y-1; /* Aumentado padding */
+  }
+
+  /* Efectos de fondo */
+  .bg-blur {
+    @apply bg-background/80 backdrop-blur-md;
+  }
+
+  /* Animaciones */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Efectos de hover */
+  .hover-underline {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  /* Efecto de brillo para iconos */
+  .icon-glow {
+    @apply relative overflow-hidden;
+  }
+
+  .icon-glow::before {
+    @apply content-[''] absolute inset-0 bg-tech-accent/0 rounded-full transition-all duration-300 opacity-0 scale-0;
+  }
+
+  .icon-glow:hover::before {
+    @apply bg-tech-accent/10 opacity-100 scale-110;
+  }
+
+  /* Utilidades para line-clamp */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .line-clamp-4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .line-clamp-5 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
+
+  .line-clamp-6 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+  }
+}
+
+/* Utilidades personalizadas */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Nuevas utilidades de espaciado */
+  .section-padding-y {
+    @apply py-32;
+  }
+
+  .section-padding-y-sm {
+    @apply py-24;
+  }
+
+  .content-spacing {
+    @apply space-y-8;
+  }
+
+  .content-spacing-lg {
+    @apply space-y-12;
+  }
+}
+
+/* Animaciones personalizadas */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes rotate-icon {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Media queries para espaciado responsive */
+@media (max-width: 768px) {
+  .section-container {
+    @apply py-24;
+  }
+
+  .section-container-sm {
+    @apply py-16;
+  }
+
+  .section-content {
+    @apply px-4; /* Asegura que siempre sea px-4 en móviles */
+  }
+
+  .section-title {
+    @apply mb-6;
+  }
+
+  .section-subtitle {
+    @apply mb-12;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-container {
+    @apply py-20;
+  }
+
+  .section-container-sm {
+    @apply py-12;
+  }
+
+  .section-content {
+    @apply px-4;
+  }
+
+  .section-title {
+    @apply mb-4;
+  }
+
+  .section-subtitle {
+    @apply mb-8;
+  }
+}

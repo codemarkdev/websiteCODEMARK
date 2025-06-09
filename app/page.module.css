@@ -1,0 +1,41 @@
+.pageContainer > section {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  /* Aumentamos el espaciado entre secciones para más respiración visual */
+  gap: 8rem;
+}
+
+.pageContainer > section:last-child {
+  margin-bottom: 0;
+}
+
+/* Clase de utilidad para aplicar espaciado consistente entre secciones */
+.section-spacing {
+  padding: 8rem 0; /* Aumentado de 6rem a 8rem */
+}
+
+/* Media queries para responsive */
+@media (max-width: 768px) {
+  .pageContainer {
+    gap: 4rem; /* Espaciado menor en móvil pero aún generoso */
+  }
+
+  .section-spacing {
+    padding: 6rem 0; /* Aumentado de 4rem a 6rem en móvil */
+  }
+}
+
+@media (max-width: 480px) {
+  .pageContainer {
+    gap: 3rem;
+  }
+
+  .section-spacing {
+    padding: 5rem 0;
+  }
+}
