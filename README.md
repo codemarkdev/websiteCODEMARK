@@ -67,6 +67,56 @@ codemark-website/
 └── tsconfig.json             # Configuración de TypeScript
 \`\`\`
 
+## Instalación
+
+Para configurar y ejecutar el proyecto localmente, sigue estos pasos:
+
+1.  **Clona el repositorio:**
+    \`\`\`bash
+    git clone [URL_DEL_REPOSITORIO]
+    cd codemark-website
+    \`\`\`
+    (Reemplaza `[URL_DEL_REPOSITORIO]` con la URL real de tu repositorio)
+
+2.  **Instala las dependencias con pnpm:**
+    Asegúrate de tener pnpm instalado. Si no lo tienes, puedes instalarlo con npm:
+    \`\`\`bash
+    npm install -g pnpm
+    \`\`\`
+    Luego, instala las dependencias del proyecto:
+    \`\`\`bash
+    pnpm install
+    \`\`\`
+
+3.  **Configura las variables de entorno:**
+    Crea un archivo `.env.local` en la raíz del proyecto, basándote en `.env.example`.
+
+    \`\`\`
+    # .env.local
+    # Configuración de API (si es necesario)
+    # API_URL=https://api.example.com
+
+    # Configuración de análisis (si es necesario)
+    # NEXT_PUBLIC_ANALYTICS_ID=your_analytics_id
+    \`\`\`
+
+4.  **Ejecuta el servidor de desarrollo:**
+    \`\`\`bash
+    pnpm dev
+    \`\`\`
+
+    El sitio estará disponible en `http://localhost:3000`.
+
+5.  **Construye para producción (opcional):**
+    \`\`\`bash
+    pnpm build
+    \`\`\`
+
+    Luego, puedes iniciar el servidor de producción:
+    \`\`\`bash
+    pnpm start
+    \`\`\`
+
 ## Guía de Organización de Componentes
 
 ### Principios de Organización

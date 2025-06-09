@@ -153,7 +153,7 @@ export default function OurTeam() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16" // Adjusted margin-bottom
+          className="text-center mb-12 md:mb-16 pt-16" // Añadido pt-16 aquí
         >
           <ResponsiveText as="h2" size="5xl" weight="bold" color="primary" className="mb-4">
             Nuestro Equipo Estelar
@@ -283,7 +283,7 @@ export default function OurTeam() {
           </AnimatePresence>
         </div>
         {/* Indicadores mejorados con mejor espaciado */}
-        <div className="flex justify-center items-center gap-6 md:gap-8 mt-12 px-4">
+        <div className="flex justify-center items-center gap-6 md:gap-8 mt-12 px-4 mb-16">
           {teamMembers.map((_, index) => (
             <motion.button
               key={index}
