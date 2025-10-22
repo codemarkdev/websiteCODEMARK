@@ -1,0 +1,125 @@
+# ============================
+# 0) Resend API KEY (desde .htaccess)
+#    Usa SIEMPRE una clave NUEVA (rota la anterior en Resend)
+# ============================
+# MÉTODO A (preferido): SetEnv
+SetEnv RESEND_API_KEY 
+
+# --- Si SetEnv no funciona en tu hosting, comenta la línea arriba y usa:
+# MÉTODO B: Rewrite env (LiteSpeed suele exponerla como REDIRECT_)
+# RewriteEngine On
+# RewriteRule .* - [E=RESEND_API_KEY:re_xxx_TU_CLAVE_RESEND]
+
+# ============================
+# 1) Redirección a HTTPS
+# ============================
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ============================
+# 2) Errores personalizados (opcional)
+# ============================
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
+
+# ============================
+# 3) Security headers
+# ============================
+# Evita MIME sniffing
+Header set X-Content-Type-Options "nosniff"
+# Evita clickjacking
+Header always set X-Frame-Options "SAMEORIGIN"
+# XSS (navegadores antiguos)
+Header set X-XSS-Protection "1; mode=block"
+# HSTS (solo si tu sitio ya responde en HTTPS correctamente)
+Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+# Referrer policy (privacidad)
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+# Permissions-Policy (bloquea hardware APIs que no usas)
+Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+
+# (OPCIONAL) Content-Security-Policy — puede romper CSS/JS inline. Actívala solo si la ajustas a tu sitio.
+# Header set Content-Security-Policy "default-src 'self' https: data:; img-src 'self' https: data:; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:; connect-src 'self' https:; frame-ancestors 'self';"
+
+# ============================
+# 4) Deshabilitar listado de directorios
+# ============================
+Options -Indexes
+
+# ============================
+# 5) Oculta versión de Apache/PHP (si el hosting lo permite)
+# ============================
+ServerSignature Off
+
+# ============================
+# 6) Bloqueos de ficheros sensibles
+# ============================
+# Bloquea todos los .dotfiles (.env, .git, etc.)
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Bloquea archivos de configuración / backups / claves
+<FilesMatch "(^|/)(composer\.(json|lock)|package(-lock)?\.json|yarn\.lock|pnpm-lock\.yaml|Dockerfile|docker-compose\.yml|Makefile|Gruntfile\.js|gulpfile\.js|webpack\.config\.js|phpunit\.xml|\.env|\.env\..*|.*\.(ini|log|bak|old|sql|sh|conf|swp|swo))$">
+  Require all denied
+</FilesMatch>
+
+# Bloquea carpetas comunes de desarrollo si existieran
+RewriteRule ^(vendor|node_modules|tests|backup|private|secret)/ - [F,L]
+
+# (Si usas /public/secret para guardar claves por include)
+<IfModule mod_authz_core.c>
+  <Directory "/public_html/secret">
+    Require all denied
+  </Directory>
+</IfModule>
+
+# ============================
+# 7) Limita métodos HTTP
+# ============================
+<LimitExcept GET POST HEAD OPTIONS>
+  Require all denied
+</LimitExcept>
+
+# ============================
+# 8) Caching + Compresión
+# ============================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE \
+    text/plain text/html text/xml text/css text/javascript application/javascript \
+    application/json application/xml application/rss+xml application/atom+xml \
+    image/svg+xml application/font-woff application/font-woff2 font/woff2
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # Imágenes & fuentes
+  ExpiresByType image/avif "access plus 6 months"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpg "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/gif "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 6 months"
+  # CSS/JS
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  # HTML
+  ExpiresByType text/html "access plus 5 minutes"
+</IfModule>
+
+# Cache-Control por si no hay Expires
+<IfModule mod_headers.c>
+  <FilesMatch "\.(ico|avif|webp|gif|png|jpe?g|svg|woff2)$">
+    Header set Cache-Control "public, max-age=15552000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(html|htm|php)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>

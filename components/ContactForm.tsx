@@ -203,8 +203,8 @@ export default function ContactForm() {
           </motion.div>
 
           <div className="flex-1 space-y-6">
-            <ContactInfoCard icon={Mail} title="Email" content="info@codemark.com" delay={0.2} />
-            <ContactInfoCard icon={Phone} title="Teléfono" content="+503 7572 4067" delay={0.3} />
+            <ContactInfoCard icon={Mail} title="Email" content="info@codemark.es" delay={0.2} />
+            <ContactInfoCard icon={Phone} title="Teléfono" content="+503 7258 3802" delay={0.3} />
             <ContactInfoCard icon={MapPin} title="Ubicación" content={["El Salvador, San Miguel"]} delay={0.4} />
           </div>
            <br></br> 
