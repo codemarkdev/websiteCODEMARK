@@ -1,10 +1,10 @@
 // app/clientes/page.tsx
-import type { Metadata } from "next"
 import ClientesView from "./ClientesView"
 
-export const metadata: Metadata = {
-  title: "Clientes | CodeMark",
-  description: "Explora nuestros clientes, casos de éxito y proyectos.",
+export const metadata = {
+  title: "Nuestros Clientes | CodeMark",
+  description:
+    "Casos reales e impacto medible de proyectos desarrollados por CodeMark.",
 }
 
 export default function Page() {

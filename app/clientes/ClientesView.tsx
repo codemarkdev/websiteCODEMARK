@@ -3,7 +3,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ClientsHeader } from "../../components/sections/clients/data/ClientsHeader"
+import { ClientsHeader } from "@/components/sections/clients/data/ClientsHeader"
 import { ClientsGrid } from "@/components/sections/clients/data/ClientsGrid"
 import { clientLogos } from "@/components/sections/clients/data/data"
 
@@ -22,6 +22,7 @@ export default function ClientesView() {
           <ClientsGrid items={clientLogos} />
 
           <div className="mt-12 md:mt-16 flex justify-center">
+            {/* Si tu sección en la home usa id="contacto", este href es correcto */}
             <Link href="/#contacto" className="inline-block" aria-label="Contáctanos para cotizar tu proyecto">
               <Button variant="outline" className="rounded-2xl px-6">
                 ¿Hablamos de tu proyecto?

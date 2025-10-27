@@ -10,6 +10,7 @@ import { ResponsiveContainer } from "./ui/responsive-container"
 import { ResponsiveText } from "./ui/responsive-text"
 import { useIsMobile, useIsTablet } from "@/hooks/useBreakpoint"
 
+
 const tabs = [
   {
     title: "Nuestra Misión",

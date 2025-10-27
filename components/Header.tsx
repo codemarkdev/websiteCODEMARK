@@ -1,4 +1,6 @@
+// components/Header.tsx
 "use client"
+
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
@@ -7,41 +9,22 @@ import { useTheme } from "@/app/theme-provider"
 import { ResponsiveContainer } from "./ui/responsive-container"
 import { ResponsiveText } from "./ui/responsive-text"
 import { useIsSmallScreen } from "@/hooks/useBreakpoint"
+import { navLinks } from "@/components/nav/navLinks"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
-  const isSmallScreen = useIsSmallScreen() // True for screens <= 931px
+  const isSmallScreen = useIsSmallScreen() // true si <= 931px
 
   useEffect(() => {
-    if (!isSmallScreen) {
-      setIsOpen(false) // Close menu if not small screen
-    }
+    if (!isSmallScreen) setIsOpen(false)
   }, [isSmallScreen])
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
-
-  const navLinks = [
-    { name: "Inicio", href: "#home" },
-    { name: "Quiénes Somos", href: "#about" },
-    { name: "Servicios", href: "#services" },
-    { name: "Tecnologías", href: "#tech-stack" },
-    { name: "Beneficios", href: "#benefits" },
-    { name: "Equipo", href: "#team" },
-    { name: "Contacto", href: "#contact" },
-  ]
-
-  // Variants for staggered animation of menu items
   const menuVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.07,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
     },
   }
 
@@ -66,7 +49,7 @@ export default function Header() {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                href={link.href}
+                href={link.href.startsWith("#") ? `/${link.href}` : link.href}
                 className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
               >
                 {link.name}
@@ -81,7 +64,7 @@ export default function Header() {
             </button>
           </nav>
 
-          {/* Mobile Menu Button and Theme Toggle */}
+          {/* Mobile Menu Button + Theme */}
           <div className="flex items-center gap-2 navBreakpoint:hidden">
             <button
               onClick={toggleTheme}
@@ -91,7 +74,7 @@ export default function Header() {
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
             <button
-              onClick={toggleMenu}
+              onClick={() => setIsOpen((v) => !v)}
               className="p-2 rounded-md text-foreground hover:text-primary transition-colors duration-300"
               aria-label="Toggle mobile menu"
             >
@@ -101,7 +84,7 @@ export default function Header() {
         </div>
       </ResponsiveContainer>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && isSmallScreen && (
           <motion.nav
@@ -115,7 +98,7 @@ export default function Header() {
               {navLinks.map((link) => (
                 <motion.li key={link.name} variants={itemVariants} className="w-full text-center">
                   <Link
-                    href={link.href}
+                    href={link.href.startsWith("#") ? `/${link.href}` : link.href}
                     onClick={() => setIsOpen(false)}
                     className="block text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-all duration-300 font-medium text-lg py-3 px-4"
                   >
